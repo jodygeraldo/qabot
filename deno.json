@@ -1,0 +1,12 @@
+{
+	"tasks": {
+		"dev": "deno run -A --watch server.ts",
+		"register": "deno run -A register.ts"
+	},
+	"deploy": {
+		"project": "eacdb208-340d-4a91-a890-a5f11e41f1d4",
+		"exclude": ["**/node_modules"],
+		"include": [],
+		"entrypoint": "server.ts"
+	}
+}
