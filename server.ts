@@ -42,7 +42,7 @@ app.post("/interactions", async (c) => {
   if (interaction.type === InteractionType.APPLICATION_COMMAND) {
     const commandName = interaction.data.name.toLowerCase();
 
-    if (commandName === ASK_AI_COMMAND) {
+    if (commandName === ASK_AI_COMMAND.name) {
       const model = "@hf/thebloke/openhermes-2.5-mistral-7b-awq";
       const aiUrl =
         `https://api.cloudflare.com/client/v4/accounts/${cfAccId}/ai/run/${model}`;
@@ -57,18 +57,23 @@ app.post("/interactions", async (c) => {
       const aiRes = await fetch(aiUrl, {
         method: "POST",
         headers: {
+          "Content-Type": "application/json",
           Authorization: `Bearer ${aiToken}`,
         },
-        body: JSON.stringify([
-          systemPromp,
-          { role: "user", content: question },
-        ]),
+        body: JSON.stringify({
+          messages: [
+            systemPromp,
+            { role: "user", content: question },
+          ],
+        }),
       });
+
+      const answer = (await aiRes.json()).result.response;
 
       return c.json({
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
-          content: await aiRes.text(),
+          content: answer,
         },
       });
     }
