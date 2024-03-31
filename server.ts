@@ -42,18 +42,6 @@ app.post("/interactions", async (c) => {
   if (interaction.type === InteractionType.APPLICATION_COMMAND) {
     const commandName = interaction.data.name.toLowerCase();
 
-    if (
-      commandName === QUESTION_COMMAND.name ||
-      commandName === QUESTION_SHORT_COMMAND.name
-    ) {
-      return c.json({
-        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-        data: {
-          content: "hello world",
-        },
-      });
-    }
-
     if (commandName === ASK_AI_COMMAND) {
       const model = "@hf/thebloke/openhermes-2.5-mistral-7b-awq";
       const aiUrl =
@@ -81,6 +69,18 @@ app.post("/interactions", async (c) => {
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
           content: await aiRes.text(),
+        },
+      });
+    }
+
+    if (
+      commandName === QUESTION_COMMAND.name ||
+      commandName === QUESTION_SHORT_COMMAND.name
+    ) {
+      return c.json({
+        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+        data: {
+          content: "hello world",
         },
       });
     }
