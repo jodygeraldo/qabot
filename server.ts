@@ -1,4 +1,5 @@
 import { loadSync } from "https://deno.land/std@0.221.0/dotenv/mod.ts";
+import { assertExists } from "https://deno.land/std@0.221.0/assert/mod.ts";
 import { Hono } from "https://deno.land/x/hono@v4.1.5/mod.ts";
 import {
   InteractionResponseType,
@@ -7,10 +8,13 @@ import {
 } from "npm:discord-interactions";
 import { ASK_AI_COMMAND } from "./commands.ts";
 
-const env = loadSync();
-const publicKey = env.PUBLIC_KEY;
-const cfAccId = env.CF_ACC_ID;
-const aiToken = env.AI_TOKEN;
+loadSync({ export: true });
+const publicKey = Deno.env.get("PUBLIC_KEY");
+const cfAccId = Deno.env.get("CF_ACC_ID");
+const aiToken = Deno.env.get("AI_TOKEN");
+assertExists(publicKey, "Missing Discord PUBLIC_KEY env");
+assertExists(cfAccId, "Missing Cloudflare ACC_ID env");
+assertExists(aiToken, "Missing Cloudflare AI_TOKEN env");
 
 const app = new Hono();
 
