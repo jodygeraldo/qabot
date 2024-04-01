@@ -5,11 +5,7 @@ import {
   InteractionType,
   verifyKey,
 } from "npm:discord-interactions";
-import {
-  ASK_AI_COMMAND,
-  QUESTION_COMMAND,
-  QUESTION_SHORT_COMMAND,
-} from "./commands.ts";
+import { ASK_AI_COMMAND } from "./commands.ts";
 
 const env = loadSync();
 const publicKey = env.PUBLIC_KEY;
@@ -74,18 +70,6 @@ app.post("/interactions", async (c) => {
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
           content: answer,
-        },
-      });
-    }
-
-    if (
-      commandName === QUESTION_COMMAND.name ||
-      commandName === QUESTION_SHORT_COMMAND.name
-    ) {
-      return c.json({
-        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-        data: {
-          content: "hello world",
         },
       });
     }

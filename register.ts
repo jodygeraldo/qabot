@@ -1,9 +1,5 @@
 import { loadSync } from "https://deno.land/std@0.221.0/dotenv/mod.ts";
-import {
-  ASK_AI_COMMAND,
-  QUESTION_COMMAND,
-  QUESTION_SHORT_COMMAND,
-} from "./commands.ts";
+import { ASK_AI_COMMAND } from "./commands.ts";
 
 const env = loadSync();
 const appId = env.APP_ID;
@@ -19,11 +15,7 @@ const response = await fetch(discordApiUrl, {
     "Content-Type": "application/json",
     Authorization: `Bot ${botToken}`,
   },
-  body: JSON.stringify([
-    ASK_AI_COMMAND,
-    QUESTION_COMMAND,
-    QUESTION_SHORT_COMMAND,
-  ]),
+  body: JSON.stringify([ASK_AI_COMMAND]),
 });
 
 if (response.ok) {
