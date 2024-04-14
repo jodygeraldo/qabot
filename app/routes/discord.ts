@@ -5,7 +5,7 @@ import {
   verifyKey,
 } from "discord-interactions";
 import { Hono } from "hono";
-import { ASK_AI_COMMAND } from "./commands.ts";
+import { ASK_AI_COMMAND } from "../lib/discord-commands.ts";
 
 const publicKey = Deno.env.get("PUBLIC_KEY");
 const cfAccId = Deno.env.get("CF_ACC_ID");

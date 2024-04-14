@@ -1,7 +1,12 @@
 {
   "tasks": {
-    "dev": "deno run -A --watch server.ts",
-    "register": "deno run -A register.ts"
+    "dev": "deno task dev:deno & deno task dev:css",
+    "dev:deno": "deno run -A --watch server.ts",
+    "dev:css": "deno run -A npm:tailwindcss -i ./app/tailwind.css -o ./build/output.css --watch",
+    "build": "deno task build:css && deno task build:hash",
+    "build:css": "deno run -A npm:tailwindcss -i ./app/tailwind.css -o ./build/output.css --minify",
+    "build:hash": "deno run -A scripts/css-build-hash.ts --input=build/output.css --outDir=build --document=app/document.tsx",
+    "register": "deno run -A discord-register.ts"
   },
   "deploy": {
     "project": "eacdb208-340d-4a91-a890-a5f11e41f1d4",
@@ -11,9 +16,15 @@
   },
   "imports": {
     "@std/assert": "jsr:@std/assert@^0.222.1",
+    "@std/cli": "jsr:@std/cli@^0.222.1",
+    "@std/crypto": "jsr:@std/crypto@^0.222.1",
     "@std/dotenv": "jsr:@std/dotenv@^0.222.1",
-	  "discord-interactions": "npm:discord-interactions",
+    "@std/fs": "jsr:@std/fs@^0.222.1",
+    "@std/path": "jsr:@std/path@^0.222.1",
+    "discord-interactions": "npm:discord-interactions",
     "hono": "https://deno.land/x/hono@v4.2.3/mod.ts",
-	  "hono/middleware": "https://deno.land/x/hono@v4.2.3/middleware.ts"
+    "hono/jsx": "https://deno.land/x/hono@v4.2.3/jsx/index.ts",
+    "hono/middleware": "https://deno.land/x/hono@v4.2.3/middleware.ts",
+    "tailwindcss": "npm:tailwindcss"
   }
 }

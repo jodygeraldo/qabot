@@ -1,5 +1,5 @@
 import { loadSync } from "https://deno.land/std@0.221.0/dotenv/mod.ts";
-import { ASK_AI_COMMAND } from "./commands.ts";
+import { ASK_AI_COMMAND } from "../app/lib/discord-commands.ts";
 
 const env = loadSync();
 const appId = env.APP_ID;
